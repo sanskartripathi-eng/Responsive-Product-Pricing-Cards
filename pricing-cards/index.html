@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pricing cards</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Inter:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#eceef7; --surface:#fff; --ink:#171a38; --muted:#5c6082; --line:#d9dcee;
+  --accent:#3b49f0; --accent-ink:#fff; --feat-bg:#171a38; --feat-ink:#f4f5ff; --feat-muted:#a9aed6;
+  --ribbon-a:#3b49f0; --ribbon-b:#0f9d7a; --shadow:rgba(23,26,56,.16);
+  --head:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1020; --surface:#171a30; --ink:#eef0ff; --muted:#9a9fc7; --line:#2a2e4d;
+    --accent:#7783ff; --accent-ink:#0e1020; --feat-bg:#eef0ff; --feat-ink:#171a38; --feat-muted:#51567c;
+    --ribbon-a:#7783ff; --ribbon-b:#2fc9a0; --shadow:rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1020; --surface:#171a30; --ink:#eef0ff; --muted:#9a9fc7; --line:#2a2e4d;
+  --accent:#7783ff; --accent-ink:#0e1020; --feat-bg:#eef0ff; --feat-ink:#171a38; --feat-muted:#51567c;
+  --ribbon-a:#7783ff; --ribbon-b:#2fc9a0; --shadow:rgba(0,0,0,.5);
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--body)}
+main{max-width:1060px;margin:0 auto;padding:56px 20px 72px}
+header{text-align:center;max-width:560px;margin:0 auto 36px}
+h1{font:800 clamp(2rem,5vw,3rem)/1.05 var(--head);letter-spacing:-.025em;margin:0 0 12px}
+header p{margin:0;color:var(--muted)}
+
+/* Billing toggle */
+.billing{display:flex;align-items:center;justify-content:center;gap:14px;margin:30px 0 0;font-weight:500}
+.billing span{color:var(--muted);transition:color .25s}
+.billing span.on{color:var(--ink)}
+.switch{position:relative;width:56px;height:30px;border-radius:30px;border:0;padding:0;cursor:pointer;background:var(--line);transition:background .3s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
+.switch[aria-checked="true"]{background:var(--accent)}
+.switch[aria-checked="true"]::after{transform:translateX(26px)}
+.switch:focus-visible,.cta:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.save{font-size:.8rem;font-weight:700;color:#0b6e55;background:#d3f5e9;padding:3px 10px;border-radius:20px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .save{color:#6ff0c8;background:#123d33}}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;align-items:stretch;margin-top:44px}
+.card{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:34px 28px 28px;overflow:hidden;
+  transition:transform .35s cubic-bezier(.2,.8,.3,1),box-shadow .35s ease,border-color .35s}
+.card:hover{transform:translateY(-10px) scale(1.015);box-shadow:0 26px 48px -18px var(--shadow);border-color:var(--accent)}
+.card.featured{background:var(--feat-bg);color:var(--feat-ink);border-color:var(--feat-bg)}
+.card.featured .muted,.card.featured li{color:var(--feat-muted)}
+.card.featured li strong{color:var(--feat-ink)}
+@media (min-width:900px){.card.featured{transform:translateY(-14px)}.card.featured:hover{transform:translateY(-24px) scale(1.015)}}
+
+/* Ribbon */
+.ribbon{position:absolute;top:18px;right:-1px;padding:6px 16px 6px 20px;font:700 .78rem/1 var(--head);color:#fff;letter-spacing:.02em;
+  background:var(--ribbon-a);clip-path:polygon(0 0,100% 0,100% 100%,0 100%,10px 50%);transition:transform .3s}
+.ribbon.value{background:var(--ribbon-b)}
+.card:hover .ribbon{transform:translateX(-6px)}
+
+h2{font:700 1.3rem/1.2 var(--head);margin:0 0 4px}
+.muted{color:var(--muted);margin:0;font-size:.92rem;min-height:2.8em}
+.price{display:flex;align-items:baseline;gap:6px;margin:22px 0 2px;font-family:var(--head)}
+.amount{font-size:3.2rem;font-weight:800;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.per{font-size:.95rem}
+.billed{font-size:.85rem;margin:0 0 22px;min-height:1.3em}
+ul{list-style:none;margin:0 0 28px;padding:0;display:grid;gap:11px;flex:1}
+li{display:flex;gap:10px;font-size:.93rem;color:var(--muted)}
+li strong{color:var(--ink);font-weight:500}
+li::before{content:"";flex:none;width:18px;height:18px;margin-top:2px;border-radius:50%;background:var(--accent) no-repeat center/10px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 5.2 4.2 7.4 8 3' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.cta{display:block;text-align:center;text-decoration:none;font:700 1rem var(--head);padding:14px 18px;border-radius:14px;border:2px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer;
+  transition:background .25s,color .25s,transform .2s}
+.cta:hover{background:var(--ink);color:var(--surface)}
+.cta:active{transform:scale(.97)}
+.featured .cta{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.featured .cta:hover{filter:brightness(1.1);background:var(--accent);color:var(--accent-ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.card:hover,.card.featured:hover{transform:none}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Pricing that grows with your team</h1>
+    <p>Start free for 14 days on any plan. Switch or cancel whenever you like.</p>
+    <div class="billing">
+      <span id="lblMonthly" class="on">Monthly</span>
+      <button class="switch" id="toggle" role="switch" aria-checked="false" aria-label="Bill yearly"></button>
+      <span id="lblYearly">Yearly</span>
+      <span class="save">Save 20%</span>
+    </div>
+  </header>
+
+  <section class="grid" id="grid" aria-live="polite"></section>
+</main>
+
+<script>
+const YEARLY_DISCOUNT = 0.2;
+const plans = [
+  { name:"Starter", blurb:"For freelancers sending a few invoices a month.", monthly:12, cta:"Start free trial",
+    features:["<strong>25</strong> invoices per month","1 user","Basic reports","Email support"] },
+  { name:"Team", blurb:"For small teams that bill clients every week.", monthly:29, cta:"Start free trial", ribbon:"Popular", featured:true,
+    features:["<strong>Unlimited</strong> invoices","Up to 10 users","Recurring billing","Payment reminders","Priority support"] },
+  { name:"Business", blurb:"For finance teams that need control and audit trails.", monthly:79, cta:"Start free trial", ribbon:"Best Value", value:true,
+    features:["Everything in Team","Unlimited users","Approval workflows","Custom roles and audit log","Dedicated account manager"] }
+];
+
+const grid = document.getElementById("grid");
+const toggle = document.getElementById("toggle");
+let yearly = false;
+
+function priceFor(p){ return yearly ? Math.round(p.monthly * (1 - YEARLY_DISCOUNT)) : p.monthly; }
+
+function render(){
+  grid.innerHTML = plans.map((p,i) => `
+    <article class="card${p.featured ? " featured" : ""}">
+      ${p.ribbon ? `<span class="ribbon${p.value ? " value" : ""}">${p.ribbon}</span>` : ""}
+      <h2>${p.name}</h2>
+      <p class="muted">${p.blurb}</p>
+      <div class="price"><span class="amount" data-i="${i}">$${priceFor(p)}</span><span class="per muted">/ month</span></div>
+      <p class="billed muted" data-b="${i}"></p>
+      <ul>${p.features.map(f => `<li>${f}</li>`).join("")}</ul>
+      <a class="cta" href="#start-${p.name.toLowerCase()}">${p.cta}</a>
+    </article>`).join("");
+  updateBilled();
+}
+
+function updateBilled(){
+  plans.forEach((p,i) => {
+    const el = grid.querySelector(`[data-b="${i}"]`);
+    const total = priceFor(p) * 12, saved = p.monthly * 12 - total;
+    el.textContent = yearly ? `Billed $${total} yearly. You save $${saved}.` : "Billed monthly";
+  });
+}
+
+function animatePrices(){
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  plans.forEach((p,i) => {
+    const el = grid.querySelector(`[data-i="${i}"]`);
+    const from = parseInt(el.textContent.replace("$","")) , to = priceFor(p);
+    if (reduce || from === to){ el.textContent = "$" + to; return; }
+    const start = performance.now(), dur = 450;
+    (function tick(now){
+      const t = Math.min((now - start) / dur, 1), e = 1 - Math.pow(1 - t, 3);
+      el.textContent = "$" + Math.round(from + (to - from) * e);
+      if (t < 1) requestAnimationFrame(tick);
+    })(start);
+  });
+}
+
+toggle.addEventListener("click", () => {
+  yearly = !yearly;
+  toggle.setAttribute("aria-checked", yearly);
+  toggle.setAttribute("aria-label", yearly ? "Bill monthly" : "Bill yearly");
+  document.getElementById("lblMonthly").classList.toggle("on", !yearly);
+  document.getElementById("lblYearly").classList.toggle("on", yearly);
+  animatePrices();
+  updateBilled();
+});
+
+render();
+</script>
+</body>
+</html>
